@@ -1,0 +1,24 @@
+version: "2.2"
+services:
+  backend:
+    build: ./Backend/.
+    restart: always
+    ports:
+      - "3000:3000"
+    links:
+      - db
+  db:
+    build: ./Database/.
+    restart: always
+    volumes:
+      - postgres-config:/etc/postgresql
+      - postgres-data:/var/lib/postgresql/data
+      - postgres-logs:/var/logs/postgresql
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - "5432:5432"
+volumes:
+  postgres-config:
+  postgres-data:
+  postgres-logs:
